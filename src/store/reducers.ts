@@ -51,25 +51,23 @@ const newsReducer = (state = initialNewsState, action: any): NewsState => {
       return { ...state, news: [...state.news, ...action.payload] };
     case SET_SELECTED_NEWS:
       return { ...state, selectedNews: action.payload };
-    case UPDATE_VOTE:
-      return {
-        ...state,
-        news: state.news.map((item) =>
-          item.objectID === action.payload.id
-            ? {
-                ...item,
-                upvotes:
-                  action.payload.voteType === 'upvote'
-                    ? (item.upvotes || 0) + 1
-                    : item.upvotes || 0,
-                downvotes:
-                  action.payload.voteType === 'downvote'
-                    ? (item.downvotes || 0) + 1
-                    : item.downvotes || 0,
-              }
-            : item
-        ),
-      };
+      
+case 'TOGGLE_VOTE':
+  return {
+    ...state,
+    news: state.news.map((item) => {
+      if (item.objectID === action.payload.id) {
+        return {
+          ...item,
+          upvotes: Math.max((item.upvotes || 0) + action.payload.upvoteChange, 0),
+          downvotes: Math.max((item.downvotes || 0) + action.payload.downvoteChange, 0),
+          voteStatus: action.payload.newVoteStatus,
+        };
+      }
+      return item;
+    }),
+  };
+
     default:
       return state;
   }

@@ -40,20 +40,20 @@ const NewsDetails: React.FC = () => {
         Back
       </button>
         </div>
-        <div className = "flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
         <button
           onClick={() => handleVote('upvote')}
-          className="bg-green-500 text-white p-2 rounded-md"
+          className={`bg-green-500 text-white p-2 rounded ${newsItem.voteStatus === 'upvote' ? 'opacity-80' : ''}`}
         >
           Upvote ({newsItem.upvotes || 0})
         </button>
         <button
           onClick={() => handleVote('downvote')}
-          className="bg-red-500 text-white p-2 rounded-md"
+          className={`bg-red-500 text-white p-2 rounded ${newsItem.voteStatus === 'downvote' ? 'opacity-80' : ''}`}
         >
           Downvote ({newsItem.downvotes || 0})
         </button>
-        </div>
+      </div>
       </div>
       <h2 className="text-2xl font-bold mb-2">{newsItem.title}</h2>
       <p className="mb-4">
